@@ -1,40 +1,62 @@
-# Your Plugin Name
+# Facebook Account Kit plugin for NativeScript (Unofficial)
 
-Add your plugin badges here. See [nativescript-urlhandler](https://github.com/hypery2k/nativescript-urlhandler) for example.
+This plugin is a wrapper in {N} around the native facebook's Account Kit's iOS and Android plugins.
 
-Then describe what's the purpose of your plugin. 
-
-In case you develop UI plugin, this is where you can add some screenshots.
-
-## (Optional) Prerequisites / Requirements
-
-Describe the prerequisites that the user need to have installed before using your plugin. See [nativescript-firebase plugin](https://github.com/eddyverbruggen/nativescript-plugin-firebase) for example.
+Refer to facebook's [docs](https://developers.facebook.com/docs/accountkit/) to understand how Account Kit works and how to set it up on Facebook's developer portal.
 
 ## Installation
 
-Describe your plugin installation steps. Ideally it would be something like:
-
-```javascript
-tns plugin add <your-plugin-name>
+```shell
+tns plugin add nativescript-facebook-account-kit
 ```
 
+On `iOS`, Add the following to your `Info.plist` found under `/app/App_Resources/iOS` somewhere inside `<dict />`
+```xml
+    <key>FacebookAppID</key>
+	<string><!--Your app id from developer portal--></string>
+	<key>AccountKitClientToken</key>
+	<string><!--Client token from dev portal--></string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ak<!--Your app id from developer portal--></string>
+			</array>
+		</dict>
+	</array>
+```
 ## Usage 
 
-Describe any usage specifics for your plugin. Give examples for Android, iOS, Angular if needed. See [nativescript-drop-down](https://www.npmjs.com/package/nativescript-drop-down) for example.
-	
-	```javascript
-    Usage code snippets here
-    ```)
+Initialize the plugin with the response type you seek either `AuthorizationCode` or `AccessToken`
+```typescript
+import { FacebookAccountKit, AccountKitResponseType } from 'nativescript-facebook-account-kit';
+const facebookAccountKit = new FacebookAccountKit(AccountKitResponseType.AuthorizationCode);
+```
+```typescript
+try {
+    const authCode =
+    await facebookAccountKit.loginWithPhoneNumber({
+      preFillPhoneNumber : "9XXXX12345", 
+      defaultCountryCode : "IN",
+      whitelistedCountryCodes : ["IN"],
+      blacklistedCountryCodes : [],
+      enableGetACall : true,
+      presentAnimated : false,
+    });
+    console.log(authCode);
+} catch (error) {
+    console.error(error);
+}
+```
 
 ## API
-
-Describe your plugin methods and properties here. See [nativescript-feedback](https://github.com/EddyVerbruggen/nativescript-feedback) for example.
     
-| Property | Default | Description |
+| Method | Description | Return type |
 | --- | --- | --- |
-| some property | property default value | property description, default values, etc.. |
-| another property | property default value | property description, default values, etc.. |
-    
+| loginWithPhoneNumber | Use account kit login flow with lot of options. | A promise that resolves to either authorization code or access token. |
+| loginWithEmail | Use account kit email flow. | A promise that resolves to either authorization code or access token. |
+
 ## License
 
 Apache License Version 2.0, January 2004

@@ -1,28 +1,38 @@
 import { Observable } from 'tns-core-modules/data/observable';
-import * as app from 'tns-core-modules/application';
-import * as dialogs from 'tns-core-modules/ui/dialogs';
 
-export class Common extends Observable {
-  public message: string;
-
-  constructor() {
-    super();
-    this.message = Utils.SUCCESS_MSG();
-  }
-
-  public greet() {
-    return "Hello, NS";
-  }
+export enum AccountKitResponseType {
+    AccessToken,
+    AuthorizationCode
 }
 
-export class Utils {
-  public static SUCCESS_MSG(): string {
-    let msg = `Your plugin is working on ${app.android ? 'Android' : 'iOS'}.`;
+export interface AccountKitOptions {
+    enableSendToFacebook : boolean,
+    enableGetACall : boolean,
+    whitelistedCountryCodes : Array<string>,
+    blacklistedCountryCodes : Array<string>,
+    defaultCountryCode : string,
+    prefillPhoneNumber : string,
+    prefillCountryCode : string,
+    presentAnimated : boolean
+}
 
-    setTimeout(() => {
-      dialogs.alert(`${msg} For real. It's really working :)`).then(() => console.log(`Dialog closed.`));
-    }, 2000);
+export const AccountKitDefaultOptions : AccountKitOptions = {
+    enableGetACall : true,
+    enableSendToFacebook : true,
+    presentAnimated : true,
+    whitelistedCountryCodes : null,
+    blacklistedCountryCodes : null,
+    prefillCountryCode : null,
+    prefillPhoneNumber : null,
+    defaultCountryCode : "US"
+}
 
-    return msg;
-  }
+export class Common extends Observable {
+
+    constructor(responseType : AccountKitResponseType) {
+        super();
+    }
+
+    loginWithPhoneNumber(options :AccountKitOptions) {
+    }
 }

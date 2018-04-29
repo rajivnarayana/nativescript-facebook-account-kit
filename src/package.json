@@ -1,7 +1,7 @@
 {
     "name": "nativescript-facebook-account-kit",
     "version": "1.0.0",
-    "description": "Your awesome NativeScript plugin.",
+    "description": "Facebook account kit plugin for {N}.",
     "main": "facebook-account-kit",
     "typings": "index.d.ts",
     "nativescript": {
@@ -35,8 +35,8 @@
         "iOS"
     ],
     "author": {
-        "name": "Your Name",
-        "email": "youremail@yourdomain.com"
+        "name": "Rajiv Singaseni",
+        "email": "rajivnarayana@gmail.com"
     },
     "bugs": {
         "url": "https://github.com/rajivnarayana/nativescript-facebook-account-kit/issues"
