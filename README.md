@@ -10,6 +10,7 @@ Refer to facebook's [docs](https://developers.facebook.com/docs/accountkit/) to 
 tns plugin add nativescript-facebook-account-kit
 ```
 
+### iOS
 On `iOS`, Add the following to your `Info.plist` found under `/app/App_Resources/iOS` somewhere inside `<dict />`
 ```xml
     <key>FacebookAppID</key>
@@ -26,6 +27,40 @@ On `iOS`, Add the following to your `Info.plist` found under `/app/App_Resources
 		</dict>
 	</array>
 ```
+
+### Android
+On `Android`, Add the following to `AndroidManifest.xml` inside the `<application>` tag.
+```xml
+	<meta-data android:name="com.facebook.accountkit.ApplicationName"
+				android:value="@string/app_name" />
+		<meta-data android:name="com.facebook.sdk.ApplicationId"
+				android:value="@string/FACEBOOK_APP_ID" />
+		<meta-data android:name="com.facebook.accountkit.ClientToken"
+				android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+
+		<activity android:name="com.facebook.accountkit.ui.AccountKitActivity" >
+			<intent-filter>
+					<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="ak<Your Facebook app id>" />
+			</intent-filter>
+		</activity>
+    
+```
+
+Add the following as your `strings.xml` file under `app/App_Resources/Android/src/main/res/values/strings.xml`
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string name="app_name">Your App Name </string>
+    <string name="title_activity_kimera">Your App name</string>
+    <string name="FACEBOOK_APP_ID">FACEBOOK_APP_ID</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">ACCOUNT_KIT_CLIENT_TOKEM</string>
+</resources>
+```
+
 ## Usage 
 
 Initialize the plugin with the response type you seek either `AuthorizationCode` or `AccessToken`
@@ -34,20 +69,23 @@ import { FacebookAccountKit, AccountKitResponseType } from 'nativescript-faceboo
 const facebookAccountKit = new FacebookAccountKit(AccountKitResponseType.AuthorizationCode);
 ```
 ```typescript
-try {
-    const authCode =
-    await facebookAccountKit.loginWithPhoneNumber({
-      preFillPhoneNumber : "9XXXX12345", 
+const options : AccountKitOptions = {
+      prefillPhoneNumber : "9XXXX12345", 
+      prefillCountryCode : "91",
       defaultCountryCode : "IN",
       whitelistedCountryCodes : ["IN"],
       blacklistedCountryCodes : [],
       enableGetACall : true,
       presentAnimated : false,
+      enableSendToFacebook : true
+    };
+    this.facebookAccountKit.loginWithPhoneNumber(options).then(authCode => {
+      this.authCode = authCode;
+      console.log(authCode);
+    }, error => {
+      this.authCode = error.message;
+      console.error(error);
     });
-    console.log(authCode);
-} catch (error) {
-    console.error(error);
-}
 ```
 
 ## API
@@ -56,8 +94,6 @@ try {
 | --- | --- | --- |
 | loginWithPhoneNumber | Use account kit login flow with lot of options. | A promise that resolves to either authorization code or access token. |
 | loginWithEmail | Use account kit email flow. | A promise that resolves to either authorization code or access token. |
-
-Android does not work now (as of 1.0.1)
 
 ## License
 

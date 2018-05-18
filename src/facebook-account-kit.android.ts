@@ -8,39 +8,40 @@ export class FacebookAccountKit extends Common {
     private _resolve;
     private _reject;
     
-    constructor(responseType : AccountKitResponseType) {
+    constructor(public responseType : AccountKitResponseType) {
         super(responseType);
     }
-    loginWithPhoneNumber(options : AccountKitOptions) : Promise<string> {
-        console.log(com.facebook.accountkit.ui);
-        return Promise.resolve("fake code");
-    }
 
-    _loginWithPhoneNumber(options : AccountKitOptions) {
+    loginWithPhoneNumber(options : AccountKitOptions) {
         return new Promise((resolve, reject) => {
             const Intent = android.content.Intent;
             const Activity = android.app.Activity;
             const AccountKit = com.facebook.accountkit.AccountKit;
+            const PhoneNumber = com.facebook.accountkit.PhoneNumber;
             const AccountKitActivity = com.facebook.accountkit.ui.AccountKitActivity;
             const AccountKitConfiguration = com.facebook.accountkit.ui.AccountKitConfiguration;
             const LoginType = com.facebook.accountkit.ui.LoginType;
             const AccountKitLoginResult = com.facebook.accountkit.AccountKitLoginResult;
-            const APP_REQUEST_CODE = 3121;
+            const APP_REQUEST_CODE = 3121;//Som random number so we don't conflict with existing codes.
             
             const intent = new Intent(native.foregroundActivity, AccountKitActivity.class);
             const configurationBuilder = new AccountKitConfiguration.AccountKitConfigurationBuilder(
                 LoginType.PHONE,
-                AccountKitActivity.ResponseType.TOKEN); // or .ResponseType.TOKEN
-            // ... perform additional configuration ...
+                this.responseType == AccountKitResponseType.AuthorizationCode ? AccountKitActivity.ResponseType.CODE : AccountKitActivity.ResponseType.TOKEN);
+            
+                // ... perform additional configuration ...
 
-            // enableSendToFacebook : boolean,
-            // enableGetACall : boolean,
-            // whitelistedCountryCodes : Array<string>,
-            // blacklistedCountryCodes : Array<string>,
-            // defaultCountryCode : string,
-            // prefillPhoneNumber : string,
-            // prefillCountryCode : string,
-            // presentAnimated : boolean
+            // enableGetACall : boolean, May be not an option for Android sdk.
+
+            configurationBuilder.setFacebookNotificationsEnabled(options.enableSendToFacebook);
+            configurationBuilder.setSMSWhitelist(options.whitelistedCountryCodes);
+            configurationBuilder.setSMSBlacklist(options.blacklistedCountryCodes);
+            if (options.defaultCountryCode) {
+                configurationBuilder.setDefaultCountryCode(options.defaultCountryCode);
+            }
+            if (options.prefillPhoneNumber) {
+                configurationBuilder.setInitialPhoneNumber(new PhoneNumber(options.prefillCountryCode || "1", options.prefillPhoneNumber));
+            }
 
             intent.putExtra(
             AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
@@ -55,18 +56,19 @@ export class FacebookAccountKit extends Common {
                 if (requestCode == APP_REQUEST_CODE) {
                     native.off(AndroidApplication.activityResultEvent, onResult, this);
                     if (resultCode == Activity.RESULT_OK){
-                        const loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
+                        const loginResult = AccountKit.loginResultWithIntent(data);
 
                         if (loginResult.getError() != null) {
                             reject(new Error(loginResult.getError().getErrorType().getMessage()));
                         } else if (loginResult.wasCancelled()) {
                             resolve(new Error("User cancelled login"));
                         } else {
-                            if (loginResult.getAccessToken() != null) {
-                                resolve(loginResult.getAccessToken());
+                            const authorizationCode = loginResult.getAuthorizationCode();
+                            const accessToken = loginResult.getAccessToken();
+                            if (this.responseType == AccountKitResponseType.AuthorizationCode) {
+                                resolve(authorizationCode);
                             } else {
-                                resolve(loginResult.getAuthorizationCode());
-                                // map.putString("state", loginResult.getFinalAuthorizationState());
+                                resolve(accessToken);
                             }
                         }
             

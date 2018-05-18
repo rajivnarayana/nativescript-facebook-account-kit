@@ -1,5 +1,5 @@
 import { Observable } from 'tns-core-modules/data/observable';
-import { FacebookAccountKit, AccountKitResponseType } from 'nativescript-facebook-account-kit';
+import { FacebookAccountKit, AccountKitResponseType, AccountKitOptions } from 'nativescript-facebook-account-kit';
 
 export class HelloWorldModel extends Observable {
   public authCode: string;
@@ -12,14 +12,17 @@ export class HelloWorldModel extends Observable {
   }
 
   launchAccountKit() {
-    this.facebookAccountKit.loginWithPhoneNumber({
-      preFillPhoneNumber : "9550259566", 
+    const options : AccountKitOptions = {
+      prefillPhoneNumber : "9550259567", 
+      prefillCountryCode : "91",
       defaultCountryCode : "IN",
       whitelistedCountryCodes : ["IN"],
       blacklistedCountryCodes : [],
       enableGetACall : true,
       presentAnimated : false,
-    }).then(authCode => {
+      enableSendToFacebook : true
+    };
+    this.facebookAccountKit.loginWithPhoneNumber(options).then(authCode => {
       this.authCode = authCode;
       console.log(authCode);
     }, error => {
