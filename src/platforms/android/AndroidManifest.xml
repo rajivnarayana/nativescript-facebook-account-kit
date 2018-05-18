@@ -8,21 +8,4 @@
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />
-
-	<meta-data android:name="com.facebook.accountkit.ApplicationName"
-           android:value="Rowdy Dev" />
-	<meta-data android:name="com.facebook.sdk.ApplicationId"
-           android:value="1060648380740331" />
-	<meta-data android:name="com.facebook.accountkit.ClientToken"
-           android:value="d3516b3741eaf1372959bdafd2e241b7" />
-
-<activity
-  android:name="com.facebook.accountkit.ui.AccountKitActivity" >
-  <intent-filter>
-    	<action android:name="android.intent.action.VIEW" />
-      <category android:name="android.intent.category.DEFAULT" />
-      <category android:name="android.intent.category.BROWSABLE" />
-      <data android:scheme="ak1060648380740331" />
-  </intent-filter>
-</activity>
 </manifest>

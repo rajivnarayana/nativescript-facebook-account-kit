@@ -57,6 +57,8 @@ try {
 | loginWithPhoneNumber | Use account kit login flow with lot of options. | A promise that resolves to either authorization code or access token. |
 | loginWithEmail | Use account kit email flow. | A promise that resolves to either authorization code or access token. |
 
+Android does not work now (as of 1.0.1)
+
 ## License
 
 Apache License Version 2.0, January 2004

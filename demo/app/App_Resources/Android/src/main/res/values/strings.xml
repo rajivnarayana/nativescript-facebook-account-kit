@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string name="app_name">Rowdy</string>
+    <string name="title_activity_kimera">Rowdy</string>
+    <string name="FACEBOOK_APP_ID">1060648380740331</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">d3516b3741eaf1372959bdafd2e241b7</string>
+</resources>
