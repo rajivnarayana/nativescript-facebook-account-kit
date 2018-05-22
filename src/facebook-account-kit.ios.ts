@@ -26,7 +26,7 @@ export class LoginViewControllerDelegate extends NSObject implements AKFViewCont
     }
 
     viewControllerDidFailWithError(viewController : UIViewController, error:any) {
-        this._plugin.error(error);
+        console.error(error);
     }
 
     public initWith(p:FacebookAccountKit): LoginViewControllerDelegate {
