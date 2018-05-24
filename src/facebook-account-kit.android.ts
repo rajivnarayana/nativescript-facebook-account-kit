@@ -61,7 +61,7 @@ export class FacebookAccountKit extends Common {
                         if (loginResult.getError() != null) {
                             reject(new Error(loginResult.getError().getErrorType().getMessage()));
                         } else if (loginResult.wasCancelled()) {
-                            resolve(new Error("User cancelled login"));
+                            reject(new Error("User cancelled login"));
                         } else {
                             const authorizationCode = loginResult.getAuthorizationCode();
                             const accessToken = loginResult.getAccessToken();
