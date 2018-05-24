@@ -61,7 +61,7 @@ export class FacebookAccountKit extends Common {
                         if (loginResult.getError() != null) {
                             reject(new Error(loginResult.getError().getErrorType().getMessage()));
                         } else if (loginResult.wasCancelled()) {
-                            reject(new Error("User cancelled login"));
+                                    reject(new Error("User cancelled login"));
                         } else {
                             const authorizationCode = loginResult.getAuthorizationCode();
                             const accessToken = loginResult.getAccessToken();
@@ -73,7 +73,7 @@ export class FacebookAccountKit extends Common {
                         }
             
                     }else if (resultCode == Activity.RESULT_CANCELED){
-                        resolve(new Error("User cancelled login"));
+                        reject(new Error("User cancelled login"));
                     }else{
                         reject(new Error("Failed login with resultCode " + resultCode));
                     }
