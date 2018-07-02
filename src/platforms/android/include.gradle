@@ -2,7 +2,11 @@
 
 android {
   dependencies {
-    compile 'com.facebook.android:account-kit-sdk:4.+'
+    compile group: 'com.facebook.android', name: 'account-kit-sdk', version: '4.33.0', {
+        exclude group: 'com.google.android.gms', module: 'play-services-auth-api-phone'
+        exclude group: 'com.google.android.gms', module: 'play-services-auth'
+    }
+    compile group: 'com.google.android.gms', name: 'play-services-auth', version: '15.0.1'
   }
 }
 
