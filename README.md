@@ -33,19 +33,19 @@ On `Android`, Add the following to `AndroidManifest.xml` inside the `<applicatio
 ```xml
 	<meta-data android:name="com.facebook.accountkit.ApplicationName"
 				android:value="@string/app_name" />
-		<meta-data android:name="com.facebook.sdk.ApplicationId"
-				android:value="@string/FACEBOOK_APP_ID" />
-		<meta-data android:name="com.facebook.accountkit.ClientToken"
-				android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+	<meta-data android:name="com.facebook.sdk.ApplicationId"
+			android:value="@string/FACEBOOK_APP_ID" />
+	<meta-data android:name="com.facebook.accountkit.ClientToken"
+			android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
 
-		<activity android:name="com.facebook.accountkit.ui.AccountKitActivity" >
-			<intent-filter>
-					<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="ak<Your Facebook app id>" />
-			</intent-filter>
-		</activity>
+	<activity android:name="com.facebook.accountkit.ui.AccountKitActivity" >
+		<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+			<category android:name="android.intent.category.DEFAULT" />
+			<category android:name="android.intent.category.BROWSABLE" />
+			<data android:scheme="ak<Your Facebook app id>" />
+		</intent-filter>
+	</activity>
     
 ```
 
@@ -59,6 +59,17 @@ Add the following as your `strings.xml` file under `app/App_Resources/Android/sr
     <string name="FACEBOOK_APP_ID">FACEBOOK_APP_ID</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">ACCOUNT_KIT_CLIENT_TOKEM</string>
 </resources>
+```
+
+#### Account Kit and Google Play Services Version
+The plugin will default to [this version](https://github.com/rajivnarayana/nativescript-facebook-account-kit/blob/master/src/platforms/android/include.gradle) of the Android `play-services-auth` SDK and `account-kit-sdk` SDK.
+If you need to change the versions (to for instance the latest version), you can add  project ext properties `googlePlayServicesVersion` and `accountKitVersion` to `app/App_Resources/Android/app.gradle`:
+
+```
+project.ext {
+   googlePlayServicesVersion = "+"
+   accountKitVersion = "+"
+}
 ```
 
 ## Usage 
