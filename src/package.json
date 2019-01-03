@@ -8,18 +8,9 @@
         "platforms": {
             "android": "4.0.0",
             "ios": "4.0.0"
-        },
-        "hooks": [
-            {
-                "type": "after-prepare",
-                "script": "scripts/after-prepare.js",
-                "inject": true
-            }
-        ]
+        }
     },
     "scripts": {
-        "postinstall": "node postinstall.js",
-        "preuninstall": "node preuninstall.js",
         "tsc": "tsc -skipLibCheck",
         "build": "npm i && tsc && npm run build.native",
         "build.native": "node scripts/build-native.js",
@@ -61,9 +52,6 @@
         "rimraf": "^2.5.0",
         "tslint": "^5.0.0",
         "semver": "^5.5.0"
-    },
-    "dependencies": {
-        "nativescript-hook": "^0.2.2"
     },
     "bootstrapper": "nativescript-plugin-seed"
 }

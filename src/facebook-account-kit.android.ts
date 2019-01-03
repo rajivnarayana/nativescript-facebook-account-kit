@@ -21,6 +21,7 @@ export class FacebookAccountKit extends Common {
             const AccountKitActivity = com.facebook.accountkit.ui.AccountKitActivity;
             const AccountKitConfiguration = com.facebook.accountkit.ui.AccountKitConfiguration;
             const LoginType = com.facebook.accountkit.ui.LoginType;
+            const SkinManager = com.facebook.accountkit.ui.SkinManager;
             const AccountKitLoginResult = com.facebook.accountkit.AccountKitLoginResult;
             const APP_REQUEST_CODE = 3121;//Som random number so we don't conflict with existing codes.
             
@@ -42,7 +43,9 @@ export class FacebookAccountKit extends Common {
             if (options.prefillPhoneNumber) {
                 configurationBuilder.setInitialPhoneNumber(new PhoneNumber(options.prefillCountryCode || "1", options.prefillPhoneNumber));
             }
-
+            if (options.primaryColor) {
+                configurationBuilder.setUIManager(new SkinManager(SkinManager.Skin.CLASSIC, options.primaryColor.android));
+            }
             intent.putExtra(
             AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
             configurationBuilder.build());

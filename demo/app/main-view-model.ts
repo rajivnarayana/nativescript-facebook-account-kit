@@ -1,5 +1,6 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { FacebookAccountKit, AccountKitResponseType, AccountKitOptions } from 'nativescript-facebook-account-kit';
+import { Color } from 'tns-core-modules/color/color';
 
 export class HelloWorldModel extends Observable {
   public authCode: string;
@@ -20,7 +21,8 @@ export class HelloWorldModel extends Observable {
       blacklistedCountryCodes : [],
       enableGetACall : true,
       presentAnimated : false,
-      enableSendToFacebook : true
+      enableSendToFacebook : true,
+      primaryColor : new Color("#be1e2d")
     };
     this.facebookAccountKit.loginWithPhoneNumber(options).then(authCode => {
       this.authCode = authCode;

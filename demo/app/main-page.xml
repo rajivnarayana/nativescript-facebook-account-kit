@@ -1,5 +1,9 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
   xmlns:ui="nativescript-facebook-account-kit">
+  <Page.actionBar>
+        <ActionBar title="Account Kit Login Demo" icon="" class="action-bar">
+        </ActionBar>
+    </Page.actionBar>
   <StackLayout class="p-20">
     <Button tap="launchAccountKit" class="btn btn-primary m-b-20" text="Login With Phone" />
     <Label text="{{ authCode }}" class="t-14 text-center c-black" textWrap="true"/>

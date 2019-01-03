@@ -1,6 +1,7 @@
-import { Common, AccountKitResponseType, AccountKitDefaultOptions } from './facebook-account-kit.common';
+import { Common, AccountKitResponseType, AccountKitOptions, AccountKitDefaultOptions } from './facebook-account-kit.common';
 import { Page } from "tns-core-modules/ui/page";
 import { topmost } from "tns-core-modules/ui/frame";
+import { Color } from "tns-core-modules/color";
 
 export declare interface AKFViewControllerDelegate {};
 declare const AKFViewControllerDelegate : any;
@@ -9,6 +10,8 @@ declare const AKFPhoneNumber : any;
 declare const AKFResponseTypeAuthorizationCode : any;
 declare const AKFResponseTypeAccessToken : any;
 declare const AKFConfiguring : any;
+declare const AKFSkinManager : any;
+declare const AKFSkinTypeClassic : any;
 
 export class LoginViewControllerDelegate extends NSObject implements AKFViewControllerDelegate {
     public static ObjCProtocols = [ AKFViewControllerDelegate ];
@@ -95,9 +98,9 @@ export class FacebookAccountKit extends Common {
     }
 
 
-    private prepareAndPresentLoginViewController(options) {
+    private prepareAndPresentLoginViewController(options: AccountKitOptions) {
         options = Object.assign({}, AccountKitDefaultOptions, options);
-        const akfPhoneNumber = (options.preFillPhoneNumber)? new AKFPhoneNumber().initWithCountryCodePhoneNumber(options.prefillCountryCode || "1", options.prefillPhoneNumber) : null;
+        const akfPhoneNumber = (options.prefillPhoneNumber)? new AKFPhoneNumber().initWithCountryCodePhoneNumber(options.prefillCountryCode || "1", options.prefillPhoneNumber) : null;
         this._viewController = this._accountKit.viewControllerForPhoneLoginWithPhoneNumberState(akfPhoneNumber, null);
         this._delegate = new LoginViewControllerDelegate().initWith(this);
         this._viewController.delegate = this._delegate;
@@ -122,6 +125,9 @@ export class FacebookAccountKit extends Common {
             // console.log(Object.getOwnPropertyNames(AKFConfiguring.prototype));
             // console.log(AKFConfiguring.prototype.defaultCountryCode.call(this._viewController, options.defaultCountryCode));
             // descriptor.value = "IN";
+        }
+        if (options.primaryColor) {
+            setPropertyValue(this._viewController, "uiManager", AKFSkinManager.alloc().initWithSkinTypePrimaryColor(AKFSkinTypeClassic, options.primaryColor.ios));
         }
         this.currentPage.ios.presentViewControllerAnimatedCompletion(this._viewController, options.presentAnimated, null);
     }

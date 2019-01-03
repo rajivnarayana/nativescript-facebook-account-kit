@@ -1,4 +1,5 @@
 import { Observable } from 'tns-core-modules/data/observable';
+import { Color } from 'tns-core-modules/color';
 
 export enum AccountKitResponseType {
     AccessToken,
@@ -13,7 +14,8 @@ export interface AccountKitOptions {
     defaultCountryCode : string,
     prefillPhoneNumber : string,
     prefillCountryCode : string,
-    presentAnimated : boolean
+    presentAnimated : boolean,
+    primaryColor? : Color
 }
 
 export const AccountKitDefaultOptions : AccountKitOptions = {
@@ -24,7 +26,7 @@ export const AccountKitDefaultOptions : AccountKitOptions = {
     blacklistedCountryCodes : null,
     prefillCountryCode : null,
     prefillPhoneNumber : null,
-    defaultCountryCode : "US"
+    defaultCountryCode : "US",
 }
 
 export class Common extends Observable {
