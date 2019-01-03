@@ -16,7 +16,7 @@ export class HelloWorldModel extends Observable {
       prefillPhoneNumber : "9550259567", 
       prefillCountryCode : "91",
       defaultCountryCode : "IN",
-      whitelistedCountryCodes : ["IN"],
+      whitelistedCountryCodes : ["IN","US"],
       blacklistedCountryCodes : [],
       enableGetACall : true,
       presentAnimated : false,

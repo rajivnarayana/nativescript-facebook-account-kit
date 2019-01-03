@@ -8,6 +8,7 @@ declare const AKFAccountKit : any;
 declare const AKFPhoneNumber : any;
 declare const AKFResponseTypeAuthorizationCode : any;
 declare const AKFResponseTypeAccessToken : any;
+declare const AKFConfiguring : any;
 
 export class LoginViewControllerDelegate extends NSObject implements AKFViewControllerDelegate {
     public static ObjCProtocols = [ AKFViewControllerDelegate ];
@@ -111,7 +112,16 @@ export class FacebookAccountKit extends Common {
         }
         if (options.defaultCountryCode && options.whitelistedCountryCodes && options.whitelistedCountryCodes.length > 1) {
             //FIXME: Cannot set this value.
-            // setPropertyValue(this._viewController, "defaultCountryCode", NSString.stringWithString(options.defaultCountryCode));
+            try {
+                // console.log(NSClassFromString("WASetter"));
+                // setPropertyValue(this._viewController, "defaultCountryCode", options.defaultCountryCode);
+
+            } catch (e) {
+                console.error(e);
+            }
+            // console.log(Object.getOwnPropertyNames(AKFConfiguring.prototype));
+            // console.log(AKFConfiguring.prototype.defaultCountryCode.call(this._viewController, options.defaultCountryCode));
+            // descriptor.value = "IN";
         }
         this.currentPage.ios.presentViewControllerAnimatedCompletion(this._viewController, options.presentAnimated, null);
     }
