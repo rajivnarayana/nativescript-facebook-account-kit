@@ -7,3 +7,5 @@ platforms/android/*
 !platforms/android/include.gradle
 !platforms/android/*.aar
 !platforms/android/*.jar
+platforms/android/README.md
+platforms/ios/README.md

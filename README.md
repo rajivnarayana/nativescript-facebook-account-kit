@@ -80,6 +80,8 @@ import { FacebookAccountKit, AccountKitResponseType } from 'nativescript-faceboo
 const facebookAccountKit = new FacebookAccountKit(AccountKitResponseType.AuthorizationCode);
 ```
 ```typescript
+import { Color } from "tns-core-modules/color";
+
 const options : AccountKitOptions = {
       prefillPhoneNumber : "9XXXX12345", 
       prefillCountryCode : "91",
@@ -88,7 +90,8 @@ const options : AccountKitOptions = {
       blacklistedCountryCodes : [],
       enableGetACall : true,
       presentAnimated : false,
-      enableSendToFacebook : true
+	  enableSendToFacebook : true,
+	  primaryColor : new Color("orange")
     };
     this.facebookAccountKit.loginWithPhoneNumber(options).then(authCode => {
       this.authCode = authCode;
