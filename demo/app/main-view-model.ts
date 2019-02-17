@@ -22,7 +22,7 @@ export class HelloWorldModel extends Observable {
       enableGetACall : true,
       presentAnimated : false,
       enableSendToFacebook : true,
-      primaryColor : new Color("#be1e2d")
+      // primaryColor : new Color("#be1e2d")
     };
     this.facebookAccountKit.loginWithPhoneNumber(options).then(authCode => {
       this.authCode = authCode;
